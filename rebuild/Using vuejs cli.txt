@@ -1,0 +1,16 @@
+To create a project using the vuejs cli
+
+01: Naigate to folder you want to install project in.
+02: Make sure you are use nodejs v 8 or higher check with 
+	npm ls
+	npm use <version> or npm install <version>
+
+INSTALL VUE
+-----------
+01: npm install -g @vue/cli
+02: vue create <project name>
+03: Select config
+
+BUILD/RUN
+---------
+01: npm run serve
