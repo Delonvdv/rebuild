@@ -1,14 +1,16 @@
 import Vue from 'vue';
 import Router from 'vue-router';
 
-import HomePage from './home/HomePage.vue';
-
+import HomePage from '../home/HomePage.vue';
+import WelcomePage from '../welcome/WelcomePage.vue';
+import WelcomeNav from '../shared/WelcomeNav';
 
 Vue.use(Router);
 
 export default new Router({
-    mode: 'History',
-    routes: {
+    // mode: 'History',
+    routes: [
+        {
         path: '/',
         name: 'Home',
         components: {
@@ -19,10 +21,10 @@ export default new Router({
         name: 'Welcome',
         components: {
           default: WelcomePage,
-          sidebar: SidebarBuild,
+          sidebar: WelcomeNav,
         },
-      },
-
-
+      }
+    ]
+    
 });
 
