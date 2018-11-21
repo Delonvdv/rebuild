@@ -3,19 +3,18 @@ import Router from 'vue-router';
 
 import HomePage from '../home/HomePage.vue';
 import WelcomePage from '../welcome/WelcomePage.vue';
-import WelcomeNav from '../shared/WelcomeNav';
+import WelcomeNav from '../shared/WelcomeNav.vue';
 
 Vue.use(Router);
 
 export default new Router({
-    // mode: 'History',
+    mode: 'history',
     routes: [
         {
         path: '/',
         name: 'Home',
-        components: {
-          default: HomePage,
-        },
+        component: HomePage,
+        
       }, {
         path: '/welcome',
         name: 'Welcome',

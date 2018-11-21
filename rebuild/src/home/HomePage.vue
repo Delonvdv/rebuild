@@ -17,7 +17,7 @@
                             <div >
                                 <img src="../media/loginImage.jpg" class="img-responsive fit-image" alt="family">
                             </div>
-                            <div class=" userEmailBanner">
+                            <div class="userEmailBanner">
                                 <div class="text-center">We've changed how you login! Just use your <strong>email address</strong> as your username</div>
                             </div>
                             <div class="row padding-8">
@@ -29,16 +29,16 @@
                                         <div class="form-group row">
                                           <label for="staticEmail" class="col-sm-3 col-form-label">Email</label>
                                           <div class="col-sm-9">
-                                            <input type="text" class="form-control" id="staticEmail" placeholder="email">
+                                            <input type="text" class="form-control" id="staticEmail" v-model="user.staticEmail" placeholder="email" >
                                           </div>
                                         </div>
                                         <div class="form-group row">
                                           <label for="inputPassword" class="col-sm-3 col-form-label">Password</label>
                                           <div class="col-sm-9">
-                                            <input type="password" class="form-control" id="inputPassword" placeholder="Password">
+                                            <input type="password" class="form-control" id="inputPassword" placeholder="Password" v-model="user.inputPassword">
                                           </div>
                                         </div>
-                                        <button type="submit" class="btn btn-primary">Login</button>
+                                        <button v-on:click.prevent="post" class="btn btn-primary">Login</button>
                                       </form>
                                       <div>
                                           First time? <a href="#" class="text-primary" >Register now</a>
@@ -61,9 +61,36 @@
 </template>
 
 <script>
+/* eslint-disable */
 export default {
-  name: 'HomePage'
-}
+  name: 'HomePage',
+  data(){
+    return{
+        user: {
+            email:'',
+            password:'',
+        },
+    }
+  },
+  methods:{
+        post: function(){
+            this.$http.post("http://rainforest.apps.medavie.ca/rainforest/accounts/login",{
+                email: this.user.staticEmail,
+                password: this.user.inputPassword,
+            },{
+            headers: {
+                'locale':'en',
+                'Content-Type': 'application/json',
+            }}).then(response => {
+                console.log(response.headers.map['x-auth']);
+            }, response => {
+                console.log('Whooops, something broke');
+            });
+        }
+    }
+  }
+
+
 </script>
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
