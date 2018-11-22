@@ -7,7 +7,8 @@
             <div class="row mt-2 mb-2">
                 <div class="col-sm-4">Policy: 0000239000</div>
                 <div class="col-sm-4">ID: 50205211100</div>
-                <div class="col-sm-4">Name: Delon Van de Venter</div>
+                <!-- <div class="col-sm-4">Name: Delon Van de Venter</div> -->
+                <div class="col-sm-4">Token: {{getUpdatedToken}}</div>
             </div>
             <div class="w-100"></div>
             <div class="alert alert-dark pb-4">
@@ -63,11 +64,10 @@
 <script>
 // import WelcomeNav from '../shared/WelcomeNav.vue';
 
+// import store from '../store/index.js';
 export default {
     name : 'WelcomePage',
-    // components:{
-    // 'WelcomeNav': WelcomeNav
-    // }
+
 }
 </script>
 

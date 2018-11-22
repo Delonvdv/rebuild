@@ -29,7 +29,8 @@
 
 <script>
 export default {
-    name: 'WelcomeNav'
+    name: 'WelcomeNav',
+    
 }
 </script>
 

@@ -1,5 +1,6 @@
 <template>
    <div class="container">
+       This is the token currently: {{this.$store.token}}
                 <div class="row justify-content-center align-self-center ">
                     <div class="col-sm-10">
                         <div class="introbox vertical-center" >
@@ -29,7 +30,7 @@
                                         <div class="form-group row">
                                           <label for="staticEmail" class="col-sm-3 col-form-label">Email</label>
                                           <div class="col-sm-9">
-                                            <input type="text" class="form-control" id="staticEmail" v-model="user.staticEmail" placeholder="email" >
+                                            <input type="text" class="form-control" id="staticEmail" v-model="user.staticEmail" placeholder="email">
                                           </div>
                                         </div>
                                         <div class="form-group row">
@@ -38,7 +39,7 @@
                                             <input type="password" class="form-control" id="inputPassword" placeholder="Password" v-model="user.inputPassword">
                                           </div>
                                         </div>
-                                        <button v-on:click.prevent="post" class="btn btn-primary">Login</button>
+                                        <button v-on:click.prevent="login" class="btn btn-primary">Login</button>
                                       </form>
                                       <div>
                                           First time? <a href="#" class="text-primary" >Register now</a>
@@ -62,6 +63,8 @@
 
 <script>
 /* eslint-disable */
+import { mapActions } from 'vuex'
+import { mapGetters } from 'vuex'
 export default {
   name: 'HomePage',
   data(){
@@ -69,11 +72,21 @@ export default {
         user: {
             email:'',
             password:'',
-        },
+       },
     }
   },
+  computed: {
+      ...mapGetters({
+          token: 'token'
+      })
+      
+  },
   methods:{
-        post: function(){
+      ...mapActions({
+          updateToken: 'updateToken'
+      }),
+        login: function(){
+            console.log('token A: '+this.$store.state.token);
             this.$http.post("http://rainforest.apps.medavie.ca/rainforest/accounts/login",{
                 email: this.user.staticEmail,
                 password: this.user.inputPassword,
@@ -83,14 +96,17 @@ export default {
                 'Content-Type': 'application/json',
             }}).then(response => {
                 console.log(response.headers.map['x-auth']);
+                this.$store.state.token =[];
+
+                this.$store.commit('XXXXX___updateToken',response.headers.map['x-auth']);
+                // console.log('token updated: '+token);
+                
             }, response => {
                 console.log('Whooops, something broke');
             });
         }
     }
   }
-
-
 </script>
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
