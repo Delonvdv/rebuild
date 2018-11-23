@@ -65,6 +65,7 @@
 /* eslint-disable */
 import { mapActions } from 'vuex'
 import { mapGetters } from 'vuex'
+
 export default {
   name: 'HomePage',
   data(){
@@ -76,17 +77,12 @@ export default {
     }
   },
   computed: {
-      ...mapGetters({
-          token: 'token'
-      })
+   
       
   },
   methods:{
-      ...mapActions({
-          updateToken: 'updateToken'
-      }),
-        login: function(){
-            console.log('token A: '+this.$store.state.token);
+   
+        login(){
             this.$http.post("http://rainforest.apps.medavie.ca/rainforest/accounts/login",{
                 email: this.user.staticEmail,
                 password: this.user.inputPassword,
@@ -95,16 +91,34 @@ export default {
                 'locale':'en',
                 'Content-Type': 'application/json',
             }}).then(response => {
-                console.log(response.headers.map['x-auth']);
-                this.$store.state.token =[];
-
-                this.$store.commit('XXXXX___updateToken',response.headers.map['x-auth']);
-                // console.log('token updated: '+token);
-                
+                if (response.status === 200 && 'x-auth' in response.headers.map) {
+                    this.$session.start()
+                    this.$session.set('jwt', response.headers.map['x-auth'])
+                    // Vue.http.headers.common['Authorization'] = 'Bearer ' + response.body.token
+                    console.log('jwt: '+ this.$session.get('jwt'))
+                    this.getMemberProfile();
+                    }
             }, response => {
                 console.log('Whooops, something broke');
             });
-        }
+        },
+        getMemberProfile(){
+            console.log("Inside getMemberProfile");
+            // this.$http.get('/someUrl', [config]).then(successCallback, errorCallback);
+            this.$http.get("http://rainforest.apps.medavie.ca/rainforest/members/"+this.user.staticEmail,{
+            headers: {
+                'locale':'en',
+                'Content-Type': 'application/json',
+                'Authorization': 'Bearer '+this.$session.get('jwt'),
+            }}).then(response => {
+                if (response.status === 200) {
+                    this.$session.set('memberProfile', response.body)
+                    this.$router.push('/welcome')
+                    }
+            }, response => {
+                console.log('Whooops, something broke');
+            });
+        },
     }
   }
 </script>

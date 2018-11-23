@@ -5,10 +5,10 @@
    <div class="container">
 
             <div class="row mt-2 mb-2">
-                <div class="col-sm-4">Policy: 0000239000</div>
-                <div class="col-sm-4">ID: 50205211100</div>
+                <div class="col-sm-4">Policy: {{policyId}}</div>
+                <div class="col-sm-4">ID: {{certificateId}}</div>
                 <!-- <div class="col-sm-4">Name: Delon Van de Venter</div> -->
-                <div class="col-sm-4">Token: {{getUpdatedToken}}</div>
+                <div class="col-sm-4">Name: {{memberName}}</div>
             </div>
             <div class="w-100"></div>
             <div class="alert alert-dark pb-4">
@@ -65,8 +65,32 @@
 // import WelcomeNav from '../shared/WelcomeNav.vue';
 
 // import store from '../store/index.js';
+// import { mapGetters } from 'vuex';
 export default {
     name : 'WelcomePage',
+    data(){
+        return {
+            memberProfile: this.$session.get('memberProfile')
+        }
+    },
+    computed:{
+       memberName:{
+           get(){
+               return this.memberProfile.activeParticipants[0].firstName +' '+this.memberProfile.activeParticipants[0].lastName
+           }
+       },
+       policyId:{
+            get(){
+                return this.memberProfile.policyId
+            }
+       },
+       certificateId:{
+            get(){
+                return this.memberProfile.certificateId
+            }
+       }
+    
+    }
 
 }
 </script>
