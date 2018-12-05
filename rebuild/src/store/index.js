@@ -4,7 +4,8 @@ import Vuex from 'vuex';
 Vue.use(Vuex);
 /* eslint-disable */
 const state = {
-    token: ''
+    token: 'empty',
+    url: 'https://sdk.medavie.bluecross.ca/rainforest/',
 }
 
 const actions = {

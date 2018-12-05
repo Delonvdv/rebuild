@@ -1,6 +1,5 @@
 <template>
    <div class="container">
-       This is the token currently: {{this.$store.token}}
                 <div class="row justify-content-center align-self-center ">
                     <div class="col-sm-10">
                         <div class="introbox vertical-center" >
@@ -65,7 +64,7 @@
 /* eslint-disable */
 import { mapActions } from 'vuex'
 import { mapGetters } from 'vuex'
-
+import store from '../store/index.js'
 export default {
   name: 'HomePage',
   data(){
@@ -83,7 +82,7 @@ export default {
   methods:{
    
         login(){
-            this.$http.post("http://rainforest.apps.medavie.ca/rainforest/accounts/login",{
+            this.$http.post(this.$store.state.url+"accounts/login",{
                 email: this.user.staticEmail,
                 password: this.user.inputPassword,
             },{
@@ -105,7 +104,7 @@ export default {
         getMemberProfile(){
             console.log("Inside getMemberProfile");
             // this.$http.get('/someUrl', [config]).then(successCallback, errorCallback);
-            this.$http.get("http://rainforest.apps.medavie.ca/rainforest/members/"+this.user.staticEmail,{
+            this.$http.get(this.$store.state.url+"members/"+this.user.staticEmail,{
             headers: {
                 'locale':'en',
                 'Content-Type': 'application/json',
